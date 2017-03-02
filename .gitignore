@@ -12,3 +12,4 @@ profiles.clj
 /log
 .idea/
 figwheel_server.log
+train-race.iml
