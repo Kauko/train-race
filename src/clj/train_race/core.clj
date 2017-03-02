@@ -46,6 +46,15 @@
     (log/info component "started"))
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
+(defn dev-restart
+  ([] (dev-restart nil))
+  ([& args]
+   (log/info "Shutting down all services")
+   (doseq [component (:stopped (mount/stop))]
+     (log/info component "stopped"))
+   (log/info "Restarting..")
+   (start-app args)))
+
 (defn -main [& args]
   (cond
     (some #{"migrate" "rollback"} args)
