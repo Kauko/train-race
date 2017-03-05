@@ -4,8 +4,8 @@
             [luminus.http-server :as http]
             [luminus-migrations.core :as migrations]
             [train-race.config :refer [env]]
+            [train-race.log :as log :refer [logger]]
             [clojure.tools.cli :refer [parse-opts]]
-            [clojure.tools.logging :as log]
             [mount.core :as mount])
   (:gen-class))
 
@@ -35,7 +35,7 @@
 
 (defn stop-app []
   (doseq [component (:stopped (mount/stop))]
-    (log/info component "stopped"))
+    (log/info logger ::system.shutdown {:msg (str component " stopped")}))
   (shutdown-agents))
 
 (defn start-app [args]
@@ -43,16 +43,16 @@
                         (parse-opts cli-options)
                         mount/start-with-args
                         :started)]
-    (log/info component "started"))
+    (log/info logger ::system.startup {:msg (str component " started")}))
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn dev-restart
   ([] (dev-restart nil))
   ([& args]
-   (log/info "Shutting down all services")
+   (log/info logger ::system.restart {:msg "Shutting down all services"})
    (doseq [component (:stopped (mount/stop))]
-     (log/info component "stopped"))
-   (log/info "Restarting..")
+     (log/info logger ::system.restart {:msg (str component " stopped")}))
+   (log/info logger ::system.restart {:msg "Restarting.."})
    (start-app args)))
 
 (defn -main [& args]
@@ -64,4 +64,3 @@
       (System/exit 0))
     :else
     (start-app args)))
-  
