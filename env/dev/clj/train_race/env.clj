@@ -1,14 +1,14 @@
 (ns train-race.env
   (:require [selmer.parser :as parser]
-            [clojure.tools.logging :as log]
+            [train-race.log :as log :refer [logger]]
             [train-race.dev-middleware :refer [wrap-dev]]))
 
 (def defaults
   {:init
    (fn []
      (parser/cache-off!)
-     (log/info "\n-=[train-race started successfully using the development profile]=-"))
+     (log/info logger ::system.startup {:msg "train-race starting using the development profile"}))
    :stop
    (fn []
-     (log/info "\n-=[train-race has shut down successfully]=-"))
+     (log/info logger ::system.shutdown {:msg "train-race shutting down"}))
    :middleware wrap-dev})
