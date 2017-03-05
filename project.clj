@@ -111,7 +111,7 @@
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns train-race.core
                                  :init (train-race.core/-main)
-                                 :port 53212}
+                                 :port 7001}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:resource-paths ["env/test/resources"]
