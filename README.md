@@ -2,7 +2,7 @@
 
 generated using Luminus version "2.9.11.34"
 
-FIXME
+WIP server for a simple AI game played over REST API
 
 ## Prerequisites
 
@@ -18,4 +18,4 @@ To start a web server for the application, run:
 
 ## License
 
-Copyright © 2017 FIXME
+Copyright © 2017 Teemu Kaukoranta
