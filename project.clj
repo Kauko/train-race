@@ -5,6 +5,7 @@
 
   :dependencies [[quil "2.6.0"]
                  [com.taoensso/sente "1.11.0"]
+                 [alter-cljs "0.2.0"]
 
                  ;; Dependencies from Luminus
                  [buddy "1.3.0"]
