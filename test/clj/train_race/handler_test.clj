@@ -1,4 +1,4 @@
-(ns train-race.test.handler
+(ns train-race.handler-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :refer :all]
             [train-race.handler :refer :all]))

@@ -1,4 +1,4 @@
-(ns train-race.test.db.core
+(ns train-race.db.core-test
   (:require [train-race.db.core :refer [*db*] :as db]
             [luminus-migrations.core :as migrations]
             [clojure.test :refer :all]
