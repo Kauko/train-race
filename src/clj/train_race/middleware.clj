@@ -1,6 +1,6 @@
 (ns train-race.middleware
   (:require [train-race.env :refer [defaults]]
-            [clojure.tools.logging :as log]
+            [train-race.log :as log :refer [logger]]
             [train-race.layout :refer [*app-context* error-page]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.webjars :refer [wrap-webjars]]
@@ -37,10 +37,14 @@
     (try
       (handler req)
       (catch Throwable t
-        (log/error t)
-        (error-page {:status 500
-                     :title "Something very bad has happened!"
-                     :message "We've dispatched a team of highly trained gnomes to take care of the problem."})))))
+        (let [response {:status 500
+                        :title "Something very bad has happened!"
+                        :message "We've dispatched a team of highly trained gnomes to take care of the problem."}]
+          (log/error logger ::middleware.wrap-internal-error {:msg "Failure in wrap-internal error"
+                                                              :ex t
+                                                              :request req
+                                                              :response response})
+          (error-page response))))))
 
 (defn wrap-csrf [handler]
   (wrap-anti-forgery
